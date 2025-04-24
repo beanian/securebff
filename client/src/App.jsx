@@ -4,9 +4,10 @@ function App() {
   const [csrf, setCsrf] = useState("");
   const [email, setEmail] = useState("");
   const [result, setResult] = useState("");
+  const API_BASE = import.meta.env.VITE_API_BASE || "";
 
   useEffect(() => {
-    fetch("http://localhost:4000/csrf-token", {
+    fetch("${API_BASE}/csrf-token", {
       credentials: "include"
     })
       .then((res) => res.json())
@@ -14,12 +15,12 @@ function App() {
   }, []);
 
   const handleCheck = async () => {
-    const csrfRes = await fetch("http://localhost:4000/csrf-token", {
+    const csrfRes = await fetch("${API_BASE}/csrf-token", {
       credentials: "include"
     });
     const { csrf: freshToken } = await csrfRes.json();
   
-    const res = await fetch("http://localhost:4000/check-account", {
+    const res = await fetch("${API_BASE}/check-account", {
       method: "POST",
       credentials: "include",
       headers: {
